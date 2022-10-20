@@ -43,7 +43,7 @@ void main() {
 
 	float forma = f1(vec2(step(fract(distance(0.5 + st * n1, vec2(0.5)) * -14. * st.x), st.x)) - st * distance(st * st.y * step(0.9, log(0.5 + st.y)), vec2(sin(u_time))));
 
-	vec3 color = vec3(distance(vec2(n1), st)/ st.x - forma * n1 * st.y / sin(u_time), forma  - f1(n1 * st * st.y * sin(u_time * PI)), forma) ;
+	vec3 color = vec3(distance(vec2(st.y* st.y,st.x* n1), st)/ st.x - forma * n1 * st.y / sin(u_time), forma  - f1(n1 * st * st.y * sin(u_time * PI)), forma) ;
 
 	gl_FragColor = vec4(color * distance(log(color.y) * color.x, n1), 1.);
 }

@@ -17,12 +17,8 @@ void main() {
 	float izq = step(borde, st.x);
 	float der = 1.- step(1. - borde, st.x);
 	float arriba = step(borde, st.y);
-	float abajo = smoothstep(1. - borde, 1. - borde * 0.2, st.y);
-
-	float circulo = distance(vec2(0.5), st);
-
-	float cuadrado = izq * der * arriba * abajo;
-	float alpha = circulo * cuadrado;
+	float abajo = 1. - step(1. - borde, st.y);
+	float alpha = izq * der * arriba * abajo;
 
 	gl_FragColor = vec4(vec3(alpha), 1.);
 }

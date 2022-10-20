@@ -26,9 +26,13 @@ float senoidal(float x) {
 
 void main() {
 
-	vec2 st = fract(gl_FragCoord.xy/u_resolution * 10.);
+	vec2 st = fract(gl_FragCoord.xy/u_resolution);
 
-	float borde = (1. + sin(u_time)) * 0.2;
+	st = st* vec2(sin(st.x), sin(st.y));
+
+	st = vec2(dentada(st.x * 10.), dentada(st.y * 10.));
+
+	float borde = (.34 + sin(u_time)) * 0.;
 
 	float izq = step(borde, st.x);
 	float der = 1.- step(1. - borde, st.x);
@@ -36,5 +40,9 @@ void main() {
 	float abajo = 1. - step(1. - borde, st.y);
 	float alpha = izq * der * arriba * abajo;
 
-	gl_FragColor = vec4(vec3(alpha), 1.);
+	alpha = alpha * .5 * dentada(st.y * sin(u_time) + sin(u_time) * st.x * cuadrada(st.y * 12. * sin(u_time)));
+
+	alpha += rampa(10. * dentada(u_time * 18.)) * .2;
+
+	gl_FragColor = vec4(vec3(dentada(st.x * 4. * sin(u_time)) + alpha * dentada(40. * distance(st.x * cuadrada(st.y), st.y - dentada(u_time))), alpha, alpha * dentada(st.x)), 1.);
 }

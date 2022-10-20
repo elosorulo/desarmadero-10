@@ -2,7 +2,11 @@
 precision mediump float;
 #endif
 
-void main() {
+#define PI 3.1415926535
 
-	gl_FragColor = vec4(vec3(1., 0., 1.), 1.);
+uniform vec2 u_resolution;
+uniform float u_time;
+void main() {
+	
+	gl_FragColor = vec4(1., 0., 0., 1.);
 }
