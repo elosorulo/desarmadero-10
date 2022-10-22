@@ -24,11 +24,11 @@ float noise(vec2 p){
 	return res*res;
 }
 
-float f1(vec2 st) {
+float f1(vec2 uv) {
 	
-	float x1 = smoothstep(0.2, 0.8, st.x * sin(PI * u_time));
+	float x1 = smoothstep(0.2, 0.8, uv.x * sin(PI * u_time));
 
-	float x2 = fract(st.y * 10.);
+	float x2 = fract(uv.y * 10.);
 
 	return distance(x1, x2);
 }
@@ -36,14 +36,14 @@ float f1(vec2 st) {
 
 void main() {
 
-	vec2 st = fract(gl_FragCoord.xy/u_resolution);
+	vec2 uv = fract(gl_FragCoord.xy/u_resolution);
 
 	
-	float n1 = noise(st);
+	float n1 = noise(uv);
 
-	float forma = f1(vec2(step(fract(distance(0.5 + st * n1, vec2(0.5)) * -14. * st.x), st.x)) - st * distance(st * st.y * step(0.9, log(0.5 + st.y)), vec2(sin(u_time))));
+	float forma = f1(vec2(step(fract(distance(0.5 + uv * n1, vec2(0.5)) * -14. * uv.x), uv.x)) - uv * distance(uv * uv.y * step(0.9, log(0.5 + uv.y)), vec2(sin(u_time))));
 
-	vec3 color = vec3(distance(vec2(st.y* st.y,st.x* n1), st)/ st.x - forma * n1 * st.y / sin(u_time), forma  - f1(n1 * st * st.y * sin(u_time * PI)), forma) ;
+	vec3 color = vec3(distance(vec2(uv.y* uv.y,uv.x* n1), uv)/ uv.x - forma * n1 * uv.y / sin(u_time), forma  - f1(n1 * uv * uv.y * sin(u_time * PI)), forma) ;
 
 	gl_FragColor = vec4(color * distance(log(color.y) * color.x, n1), 1.);
 }

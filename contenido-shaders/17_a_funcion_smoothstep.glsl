@@ -11,7 +11,6 @@ uniform float u_time;
 void main() {
 	vec2 uv = gl_FragCoord.xy/u_resolution;
 
-	float circulo = step(0.25, distance(vec2(0.5), uv));
-
-	gl_FragColor = vec4(vec3(circulo), 1.);
+	
+	gl_FragColor = vec4(vec3(smoothstep(0.4, 0.7, uv.x)), 1.);
 }

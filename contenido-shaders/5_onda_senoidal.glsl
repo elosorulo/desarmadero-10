@@ -8,10 +8,14 @@ uniform float u_time;
 
 #define PI 3.1415926535
 
+float senoidal(float x) {
+	return (1. + sin(x * PI)) / 2.;
+}
+
 void main() {
 	vec2 uv = gl_FragCoord.xy/u_resolution;
 
-	float circulo = step(0.25, distance(vec2(0.5), uv));
+	float rojo = senoidal(uv.x * 10.);
 
-	gl_FragColor = vec4(vec3(circulo), 1.);
+	gl_FragColor = vec4(rojo, 0., 0., 1.);
 }

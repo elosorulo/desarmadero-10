@@ -8,32 +8,15 @@ uniform float u_time;
 
 #define PI 3.1415926535
 
-float rampa(float x) {
-	return abs(fract(x));
-}
-
-float dentada(float x) {
-	return -abs(fract(x)) + 1.;
-}
-	
-float cuadrada(float x) {
-	return step(0.5, fract(x));
-}
-
-float senoidal(float x) {
-	return fract(sin(fract(x) * PI));
-}
-
 void main() {
+	vec2 uv = gl_FragCoord.xy/u_resolution;
 
-	vec2 st = fract(gl_FragCoord.xy/u_resolution * 10.);
+	uv = fract(uv * 10.);
 
-	float borde = (1. + sin(u_time)) * 0.2;
-
-	float izq = step(borde, st.x);
-	float der = 1.- step(1. - borde, st.x);
-	float arriba = step(borde, st.y);
-	float abajo = 1. - step(1. - borde, st.y);
+	float izq = step(0.2, uv.x);
+	float der = 1.- step(0.8, uv.x);
+	float arriba = step(0.2, uv.y);
+	float abajo = 1. - step(0.8, uv.y);
 	float alpha = izq * der * arriba * abajo;
 
 	gl_FragColor = vec4(vec3(alpha), 1.);

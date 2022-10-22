@@ -8,10 +8,14 @@ uniform float u_time;
 
 #define PI 3.1415926535
 
+float rampa(float x) {
+	return fract(x);
+}
+
 void main() {
-	vec2 st = gl_FragCoord.xy/u_resolution;
+	vec2 uv = gl_FragCoord.xy/u_resolution;
 
-	float alpha = 1. -fract(st.x * 10.);
+	float rojo = rampa(uv.x * 10.);
 
-	gl_FragColor = vec4(vec3(alpha), 1.);
+	gl_FragColor = vec4(rojo, 0., 0., 1.);
 }

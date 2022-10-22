@@ -9,9 +9,9 @@ uniform float u_time;
 #define PI 3.1415926535
 
 void main() {
-	vec2 st = gl_FragCoord.xy/u_resolution;
+	vec2 uv = gl_FragCoord.xy/u_resolution;
 
-	float alpha = sin(st.x * PI * 10.);
+	float circulo = smoothstep(0.15, 0.35, distance(vec2(0.5), uv));
 
-	gl_FragColor = vec4(vec3(alpha), 1.);
+	gl_FragColor = vec4(vec3(circulo), 1.);
 }

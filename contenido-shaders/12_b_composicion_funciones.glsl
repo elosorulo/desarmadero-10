@@ -8,13 +8,6 @@ uniform float u_time;
 
 #define PI 3.1415926535
 
-float triangular(float x) {
-
-	x = abs(x);
-	
-	return abs((x - 2. * floor(x/2.)) - 1.);
-}
-
 float rampa(float x) {
 	return abs(fract(x));
 }
@@ -32,9 +25,9 @@ float senoidal(float x) {
 }
 
 void main() {
-	vec2 st = gl_FragCoord.xy/u_resolution;
+	vec2 uv = gl_FragCoord.xy/u_resolution;
 
-	float composicion_a = rampa(senoidal(st.y * senoidal(st.x * 10.)) * 2.);
+	float composicion_a = cuadrada(uv.x * 100. * rampa(uv.x)) * dentada(uv.x * 10.);
 	
 	gl_FragColor = vec4(vec3(composicion_a), 1.);
 }

@@ -8,9 +8,14 @@ uniform float u_time;
 
 #define PI 3.1415926535
 
+float dentada(float x) {
+	return 1. - fract(x);
+}
+
 void main() {
-	vec2 st = gl_FragCoord.xy/u_resolution;
+	vec2 uv = gl_FragCoord.xy/u_resolution;
 
+	float rojo = dentada(uv.x * 10.);
 
-	gl_FragColor = vec4(vec3(st.x), 1.);
+	gl_FragColor = vec4(rojo, 0., 0., 1.);
 }

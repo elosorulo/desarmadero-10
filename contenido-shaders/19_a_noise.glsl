@@ -1,4 +1,3 @@
-
 #ifdef GL_ES
 precision mediump float;
 #endif
@@ -24,21 +23,23 @@ float noise(vec2 p){
 	return res*res;
 }
 
-float f1(vec2 st) {
+float rectangulo(vec2 uv, float i, float d, float ar, float ab) {
+	float izq = step(i, uv.x);
+	float der = 1.- step(1. - d, uv.x);
+	float arriba = step(ar, uv.y);
+	float abajo = step(ab, uv.y);
 	
-	float x1 = smoothstep(0.2, 0.8, st.x * sin(PI * u_time));
-
-	float x2 = fract(st.y * 10.);
-
-	return distance(x1, x2);
+	return izq * der * arriba * abajo;
 }
 
+float circulo(vec2 st, float radio) {
+	return step(radio, (distance(st, vec2(0.5))));
+}
 
 void main() {
 
-	vec2 st = fract(gl_FragCoord.xy/u_resolution);
+	vec2 uv = fract(gl_FragCoord.xy/u_resolution);
 
-	float color = fract(smoothstep(0.4, sin(PI * u_time) * 0.5, distance(vec2(0.5), st)) * .1) / sin(u_time* PI);
 	
-	gl_FragColor = vec4(vec3(color), 1.);
+	gl_FragColor = vec4(vec3(noise(uv * 100.)), 1.);
 }
